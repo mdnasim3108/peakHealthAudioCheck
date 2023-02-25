@@ -9,9 +9,14 @@ import audioWave from "../../../AudioWave.json";
 import { Player } from "@lottiefiles/react-lottie-player";
 const VoiceRecord = (props) => {
   const [record, setRecord] = useState({ audio: null, isRecording: false });
-  const voiceClickHandler = () => {
-    setRecord({ audio: RecordState.START, isRecording: true });
-  };
+   const voiceClickHandler = async() => {
+   await navigator.mediaDevices.getUserMedia({ audio: true })
+    .then((stream) => {
+      setRecord({ audio: RecordState.START, isRecording: true });
+    })
+    .catch((err) => {
+      alert(`you got an error: ${err}`)})
+  }
   const onStop = (audio) => {
     console.log(audio);
   };
